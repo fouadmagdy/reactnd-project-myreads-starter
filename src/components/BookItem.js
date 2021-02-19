@@ -11,7 +11,7 @@ export default class BookItem extends Component {
 
     render() {
 
-        const { title, authors, imageLinks } = this.props.book
+        const { title, authors, imageLinks, shelf } = this.props.book
 
         return (
             <li>
@@ -19,7 +19,7 @@ export default class BookItem extends Component {
                     <div className="book-top">
                         <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${imageLinks.smallThumbnail}")` }}></div>
                         <div className="book-shelf-changer">
-                            <select onChange={this.handleSelect} value="none">
+                            <select onChange={this.handleSelect} value={shelf ? shelf : 'none'}>
                                 <option value="move" disabled>Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>
                                 <option value="wantToRead">Want to Read</option>
