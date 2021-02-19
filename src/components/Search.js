@@ -10,21 +10,21 @@ export default class Search extends Component {
     }
 
     handleSearch = (e) => {
-        console.log(e.target.value)
+
 
         if (e.target.value) {
             BooksAPI.search(e.target.value).then(searchedBook => {
-                console.log('books', searchedBook)
+                console.table('books', searchedBook)
                 if (searchedBook.error) {
-                    return
+                    this.setState({ searchedBook: [] })
                 } else {
                     this.setState({ searchedBook })
                 }
 
             })
+        } else {
+            this.setState({ searchedBook: [] })
         }
-
-
     }
 
     render() {
