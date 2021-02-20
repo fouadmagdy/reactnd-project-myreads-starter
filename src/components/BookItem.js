@@ -32,14 +32,16 @@ export default class BookItem extends Component {
     }
 
     handleShelfChange = () => {
-
-        const cartItemsFromStorage = JSON.parse(localStorage.getItem('books'))
-        let found = cartItemsFromStorage.find((book) => {
-            return this.props.book.id === book.id
-        })
-        if (found) {
-            this.setState({ shelf: found.shelf })
+        if (localStorage.getItem('books')) {
+            const cartItemsFromStorage = JSON.parse(localStorage.getItem('books'))
+            let found = cartItemsFromStorage.find((book) => {
+                return this.props.book.id === book.id
+            })
+            if (found) {
+                this.setState({ shelf: found.shelf })
+            }
         }
+
     }
 
     render() {
