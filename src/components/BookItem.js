@@ -3,6 +3,10 @@ import * as BooksAPI from '../BooksAPI'
 
 export default class BookItem extends Component {
 
+    state = {
+        book: {}
+    }
+
     handleSelect = (e) => {
 
         let { value } = e.target
@@ -10,20 +14,18 @@ export default class BookItem extends Component {
         if (this.props.onChangeBook) {
             this.props.onChangeBook(this.props.book.id, value)
 
-            if (this.props.searchedBook == true) {
+            if (this.props.searchedBook === true) {
                 BooksAPI.get(this.props.book.id).then((book) => {
-                    console.log('bookxx', book, value)
+                    this.setState({ book })
                     const cartItemsFromStorage = JSON.parse(localStorage.getItem('books'))
-                    console.log('cartItemsFromStorage', cartItemsFromStorage)
-                    book.shelf = value
+                    this.setState((currentState) => ({ book: currentState.book.shelf = value }))
                     cartItemsFromStorage.push(book)
                     localStorage.setItem('books', JSON.stringify(cartItemsFromStorage))
-                    alert('This Book Added to your Library')
+                    alert(`This Book Added to your ${value} Category`)
                 })
             }
 
         }
-
     }
 
     render() {
