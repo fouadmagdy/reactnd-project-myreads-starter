@@ -6,7 +6,8 @@ import BookShelf from '../components/BookShelf'
 export default class Search extends Component {
 
     state = {
-        searchedBook: []
+        searchedBook: [],
+        empty: false
     }
 
     handleSearch = (e) => {
@@ -16,14 +17,14 @@ export default class Search extends Component {
             BooksAPI.search(e.target.value).then(searchedBook => {
                 console.table('books', searchedBook)
                 if (searchedBook.error) {
-                    this.setState({ searchedBook: [] })
+                    this.setState({ searchedBook: [], empty: true })
                 } else {
-                    this.setState({ searchedBook })
+                    this.setState({ searchedBook, empty: false })
                 }
 
             })
         } else {
-            this.setState({ searchedBook: [] })
+            this.setState({ searchedBook: [], empty: false })
         }
     }
 
@@ -47,7 +48,8 @@ export default class Search extends Component {
                 </div>
                 <div className="search-books-results">
                     <ol className="books-grid">
-                        {this.state.searchedBook && <BookShelf shelfBooks={this.state.searchedBook} searchedBook={true} shelves="Search" />}
+                        {this.state.empty && (<p>No Result !</p>)}
+                        {this.state.searchedBook && !this.state.error && <BookShelf shelfBooks={this.state.searchedBook} searchedBook={true} shelves="Search" />}
                     </ol>
                 </div>
             </div>
