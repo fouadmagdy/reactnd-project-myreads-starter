@@ -7,14 +7,22 @@ export default class Search extends Component {
 
     state = {
         searchedBook: [],
-        empty: false
+        empty: false,
+        query: ''
+    }
+
+    updateQuery = (query) => {
+        this.setState(() => (
+            { query: query.trim() }
+        ))
+        this.handleSearch()
     }
 
     handleSearch = (e) => {
 
 
-        if (e.target.value) {
-            BooksAPI.search(e.target.value).then(searchedBook => {
+        if (this.state.query) {
+            BooksAPI.search(this.state.query).then(searchedBook => {
                 console.table('books', searchedBook)
                 if (searchedBook.error) {
                     this.setState({ searchedBook: [], empty: true })
@@ -23,7 +31,7 @@ export default class Search extends Component {
                 }
 
             })
-        } else {
+        } else if (this.state.query === "") {
             this.setState({ searchedBook: [], empty: false })
         }
     }
@@ -42,14 +50,14 @@ export default class Search extends Component {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
-                        <input type="text" placeholder="Search by title or author" onChange={this.handleSearch} />
+                        <input type="text" placeholder="Search by title or author" value={this.state.query} onChange={(event) => this.updateQuery(event.target.value)} />
 
                     </div>
                 </div>
                 <div className="search-books-results">
                     <ol className="books-grid">
-                        {this.state.empty && (<p>No Result !</p>)}
-                        {this.state.searchedBook && !this.state.error && <BookShelf shelfBooks={this.state.searchedBook} searchedBook={true} shelves="Search" />}
+                        {this.state.empty && !this.state.query && (<p>No Result !</p>)}
+                        {this.state.searchedBook && !this.state.error && this.state.query && <BookShelf shelfBooks={this.state.searchedBook} searchedBook={true} shelves="Search" />}
                     </ol>
                 </div>
             </div>
