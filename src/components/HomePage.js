@@ -17,11 +17,24 @@ export default class HomePage extends Component {
 
 
     componentDidMount() {
+
+        if (localStorage.getItem('books')) {
+            const cartItemsFromStorage = JSON.parse(localStorage.getItem('books'))
+            this.setState({ books: cartItemsFromStorage, loading: false })
+            this.shelfHandler()
+        } else {
+            this.getAllHandler()
+        }
+
+    }
+
+    getAllHandler() {
         BooksAPI.getAll().then((books) => {
             this.setState({ books })
 
             this.shelfHandler()
             this.setState({ loading: false })
+            localStorage.setItem('books', JSON.stringify(books))
         })
     }
 
@@ -52,17 +65,11 @@ export default class HomePage extends Component {
         BooksAPI.update(id, shelf).then((book) => {
             console.log('book', book)
             this.setState({ loading: true })
-            BooksAPI.getAll().then((books) => {
-                this.setState({ books })
-                this.shelfHandler()
-                this.setState({ loading: false })
-            })
+            this.getAllHandler()
         })
     }
 
     render() {
-
-        console.log(this.state.books)
 
         return (
             <div className="list-books">
