@@ -47,7 +47,7 @@ export default class Search extends Component {
                 </div>
                 <div className="search-books-results">
                     <ol className="books-grid">
-                        {this.state.searchedBook && <BookShelf shelfBooks={this.state.searchedBook} shelves="Search" />}
+                        {this.state.searchedBook && <BookShelf shelfBooks={this.state.searchedBook} searchedBook={true} shelves="Search" />}
                     </ol>
                 </div>
             </div>

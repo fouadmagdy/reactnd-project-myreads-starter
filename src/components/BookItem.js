@@ -1,12 +1,29 @@
 import React, { Component } from 'react'
+import * as BooksAPI from '../BooksAPI'
 
 export default class BookItem extends Component {
 
     handleSelect = (e) => {
 
+        let { value } = e.target
+
         if (this.props.onChangeBook) {
-            this.props.onChangeBook(this.props.book.id, e.target.value)
+            this.props.onChangeBook(this.props.book.id, value)
+
+            if (this.props.searchedBook == true) {
+                BooksAPI.get(this.props.book.id).then((book) => {
+                    console.log('bookxx', book, value)
+                    const cartItemsFromStorage = JSON.parse(localStorage.getItem('books'))
+                    console.log('cartItemsFromStorage', cartItemsFromStorage)
+                    book.shelf = value
+                    cartItemsFromStorage.push(book)
+                    localStorage.setItem('books', JSON.stringify(cartItemsFromStorage))
+                    alert('This Book Added to your Library')
+                })
+            }
+
         }
+
     }
 
     render() {
