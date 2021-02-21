@@ -1,10 +1,11 @@
 import React from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import './App.css'
 
 
 import HomePage from './components/HomePage'
 import Search from './components/Search'
+import Error from './components/Error'
 
 class BooksApp extends React.Component {
   state = {
@@ -21,8 +22,11 @@ class BooksApp extends React.Component {
     return (
       <Router>
         <div className="app">
-          <Route path='/search' component={Search} />
-          <Route path='/' exact component={HomePage} />
+          <Switch>
+            <Route path='/search' component={Search} />
+            <Route path='/' exact component={HomePage} />
+            <Route path='*' component={Error} />
+          </Switch>
         </div>
       </Router>
     )
