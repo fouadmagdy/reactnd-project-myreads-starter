@@ -11,6 +11,11 @@ To get started developing right away:
 - install all project dependencies with `npm install`
 - start the development server with `npm start`
 
+# MyReads Functionality
+
+- on HomePage you can changing the books shelf
+- on searchpage you can search for books and add it on your shelf
+
 ## What You're Getting
 
 ```bash
