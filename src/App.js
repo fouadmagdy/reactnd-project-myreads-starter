@@ -5,7 +5,7 @@ import './App.css'
 
 import HomePage from './components/HomePage'
 import Search from './components/Search'
-import Error from './components/Error'
+import NotFound from './components/NotFound'
 
 class BooksApp extends React.Component {
   state = {
@@ -25,7 +25,7 @@ class BooksApp extends React.Component {
           <Switch>
             <Route path='/search' component={Search} />
             <Route path='/' exact component={HomePage} />
-            <Route path='*' component={Error} />
+            <Route path='*' component={NotFound} />
           </Switch>
         </div>
       </Router>
